@@ -10,13 +10,21 @@ class Category(models.Model):
                               verbose_name="Категория", related_name="subcategories")
 
     def get_absolute_url(self):
-        pass
+        """Ссылка на странице категории"""
+        return reverse("category_detail", kwargs={"slug": self.slug})
 
     def __str__(self):
         return self.title
 
     def __repr__(self):
         return f'Категория: pk={self.pk}, title={self.title}'
+
+    def get_parent_category_photo(self):
+        """Для получения картинки родительской категории"""
+        if self.image:
+            return self.image.url
+        else:
+            return "0"
 
 
     class Meta:
